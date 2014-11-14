@@ -86,13 +86,31 @@ class Environment extends Node {
     }
 
     public void define (Node id, Node val) {
-	// TODO: implement this function
+		// if id already exists in innermost scope, update val
+    	Node list = find(id, scope); 
+    	if(list != null){
+			list.setCdr(val);
+		}
+    	// otherwise, add (id, val) as 1st element in innermost scope
+    	else{
+    		// create a list with entries (id, scope)
+    		// add that list to the environment
+    		scope.setCar( new Cons( new Cons(id,val), scope) );
+    	}
     }
 
     public void assign (Node id, Node val) {
-	// TODO: implement this function
-
-	// You can use find() to get a list containing the value and
-	// then update the value using setCar()
+		// You can use find() to get a list containing the value and
+		// then update the value using setCar()
+    	
+    	// if id exists in innermost scope, update val
+    	Node list = find(id, scope);
+    	if(list != null){
+			list.setCdr(val);
+		}
+    	// otherwise, error
+    	else{
+    		throw new RuntimeException("ID " + id + " attempting to be set and not found.");
+    	}
     }
 }
