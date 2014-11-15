@@ -61,7 +61,7 @@ public class Main {
 	
 	root = parser.parseExp();
 	while (root != null) {
-	    Node output = (Node)root.eval(root, Environment);
+	    Node output = (Node)root.eval(Environment);
 	}
 	
 	

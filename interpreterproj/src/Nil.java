@@ -21,7 +21,7 @@ class Nil extends Node {
   
   public boolean isNull()   { return true; }
   
-  public Object eval(Node args, Environment env){
+  public Object eval(Environment env){
   	return null;
   }
   

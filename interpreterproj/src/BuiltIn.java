@@ -36,10 +36,10 @@ class BuiltIn extends Node {
     }
     
     
-    public Object eval(Node args, Environment env){
+    public Object eval(Environment env){
     	
-    	Node car = args.getCar();
-    	Node cdr = args.getCdr();
+    	Node car = getCar();
+    	Node cdr = getCdr();
     	
     	// carries out apply based on symbol name
     	String name = car.getName();
@@ -68,7 +68,7 @@ class BuiltIn extends Node {
     	}
     	else if( name.equals("eval") ){
     		// calls eval()
-    		eval(cdr, env);
+    		cdr.eval(env);
     	}
     	else if( name.equals("apply") ){
     		// calls apply()
@@ -95,37 +95,37 @@ class BuiltIn extends Node {
     	// returns IntLit containing result
     	else if( name.equals("b+") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)args.eval(car, env) + (int)args.eval(cdr, env) );
+    			return new IntLit( (int)car.eval(env) + (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b-") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)args.eval(car, env) - (int)args.eval(cdr, env) );
+    			return new IntLit( (int)car.eval(env) - (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b*") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)args.eval(car, env) * (int)args.eval(cdr, env) );
+    			return new IntLit( (int)car.eval(env) * (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b/") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)args.eval(car, env) / (int)args.eval(cdr, env) );
+    			return new IntLit( (int)car.eval(env) / (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b=") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new BooleanLit( (int)args.eval(car, env) ==  (int)args.eval(cdr, env) );
+    			return new BooleanLit( (int)car.eval(env) == (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b<") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new BooleanLit( (int)args.eval(car, env) <  (int)args.eval(cdr, env) );
+    			return new BooleanLit( (int)car.eval(env) < (int)cdr.eval(env) );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}

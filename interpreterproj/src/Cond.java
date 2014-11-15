@@ -14,7 +14,7 @@ class Cond extends Special {
     	Printer.printCond(t, n, p);
     }
     
-    public Object eval(Node args, Environment env){
+    public Object eval(Environment env){
     	return condName;
     }
 }

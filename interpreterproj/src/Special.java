@@ -7,7 +7,7 @@ import java.io.*;
 abstract class Special {
     abstract void print(Node t, int n, boolean p);
     
-    abstract public Object eval(Node args, Environment env);
+    abstract public Object eval(Environment env);
     	
 }
 

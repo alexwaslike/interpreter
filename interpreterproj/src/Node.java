@@ -1,5 +1,6 @@
 import java.io.*;
 
+
 class Node {
   // The argument of print(int) is the number of characters to indent.
   // Every subclass of Node must implement print(int).
@@ -59,7 +60,7 @@ class Node {
 	  throw new RuntimeException("Why are we calling apply from something other than a BuiltIn or Closure?");
   }
   
-  public Object eval(Node args, Environment env){
+  public Object eval(Environment env){
 	  System.out.println("Calling eval from parent class Node.");
 	  return null;
   }

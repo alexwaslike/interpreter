@@ -37,7 +37,7 @@ class Closure extends Node {
  // adds a new frame for the function call,
  // defines bindings for the parameters with the argument values in the new frame,
  // evaluates the function body. -> calls apply() recursively
-    public Object eval(Node args, Environment env){
+    public Object eval(Environment env){
     	return null;
     }
     
@@ -55,7 +55,7 @@ class Closure extends Node {
 	        }
 	        
 	        while (!(lambdaBody.isNull())) {				//Note: Is recursive. I think.
-	            value = (Node)lambdaBody.getCar().eval(lambdaBody.getCar(), localEnv);			//eval all the expression 
+	            value = (Node)lambdaBody.getCar().eval(localEnv);			//eval all the expression 
 	            lambdaBody = lambdaBody.getCdr();				//In Lambda
 	        }
 	        return value;
