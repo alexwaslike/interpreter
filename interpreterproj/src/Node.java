@@ -55,8 +55,10 @@ class Node {
   public void setCdr(Node d) {throw new RuntimeException("setCdr called on a non-Cons Node.");}
   
   public String getName() { return ""; }
+  public int getIntVal() { throw new RuntimeException("Calling getInvVal on a non-IntLit."); }
+  public boolean getBooleanVal() { throw new RuntimeException("Calling getBooleanVal on a non-BooleanLit."); }
   
-  public Node apply(Node args){
+  public Object apply(Node args, Environment localEnv){
 	  throw new RuntimeException("Why are we calling apply from something other than a BuiltIn or Closure?");
   }
   
@@ -64,4 +66,5 @@ class Node {
 	  System.out.println("Calling eval from parent class Node.");
 	  return null;
   }
+  
 }

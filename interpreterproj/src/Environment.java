@@ -39,20 +39,34 @@ class Environment extends Node {
 
     private Node scope;		// the innermost scope, an association list
     private Environment env;	// the enclosing environment
+    
+    private final String[] builtins = { "read", "write", "eval", "apply", "interaction-environment", 
+			"symbol?", "number?", "procedure?",
+			"b+", "b-", "b*", "b/", "b=", "b<",
+			"car", "cdr", "cons", "set-car!", "set-cdr!", "null?", "pair?", "eq?",
+			"display", "newline"};
+    
 
-    public Environment()		{ scope = new Nil();  env = null; }
-    public Environment(Environment e)	{ scope = new Nil();  env = e; }
+    public Environment(){ 
+    	scope = new Nil();  
+    	env = null; 
+    	build();
+    }
+    public Environment(Environment e){ 
+    	scope = new Nil(); 
+    	env = e; 
+    	build(); 
+    }
     
-    //build env and make string array for built-ins
-    public void buildEnvironment() {
-    	String[] builtIns = { "b+", "b-", "b*", "b/", "b=", "b<",
-                                "b>", "number?", "symbol?", "car",
-                                "cdr", "cons", "set-car!", "set-cdr!",
-                                "null?", "pair?", "eq?", "procedure?",
-                                "read", "write", "eval", "apply", "display",
-                                "newline", "interaction-environment" };
-    
-            Ident id;
+    // build scope containing built-in function definitions
+    public void build() {
+    	
+    	Ident i;
+    	for(String s : builtins){
+    		i = new Ident(s);
+    		define(i, new BuiltIn( i ));
+    	}
+    	
     }
 
     public void print(int n) {
@@ -98,19 +112,24 @@ class Environment extends Node {
     }
 
     public void define (Node id, Node val) {
-		// if id already exists in innermost scope, update val
-    	Node list = find(id, scope); 
-    	if(list != null){
-    		// don't want to just set-cdr to val. want to make sure rest of 
-    		// parse tree stays attached too.
-    		val.setCdr(list.getCdr().getCdr());
-			list.setCdr(val);
-		}
-    	// otherwise, add (id, val) as 1st element in innermost scope
+    	if(id == null || val == null){
+    		throw new NullPointerException();
+    	}
     	else{
-    		// create a list with entries (id, scope)
-    		// add that list to the environment
-    		scope.setCar( new Cons( new Cons(id,val), scope) );
+    		// if id already exists in innermost scope, update val
+        	Node list = find(id, scope); 
+        	if(list != null){
+        		// don't want to just set-cdr to val. want to make sure rest of 
+        		// parse tree stays attached too.
+        		val.setCdr(list.getCdr().getCdr());
+    			list.setCdr(val);
+    		}
+        	// otherwise, add (id, val) as 1st element in innermost scope
+        	else{
+        		// create a list with entries (id, scope)
+        		// add that list to the environment
+        		scope = new Cons( new Cons(id,val), scope) ;
+        	}
     	}
     }
 

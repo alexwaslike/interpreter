@@ -15,6 +15,6 @@ class StrLit extends Node {
   public String getStrVal(){return strVal;}
   
   public Object eval(Environment e){
-	  return strVal;
+	  return this;
   }
 }

@@ -21,11 +21,8 @@ public class Main {
 
     public static void main (String argv[]) {
     	
-    Environment = new Environment();
-    	
-	// create scanner that reads from standard input
+    // create scanner that reads from standard input
 	Scanner scanner = new Scanner(System.in);
-
 
 	if (argv.length > 1) {
 	    System.err.println("Usage: java Main [-d]");
@@ -53,15 +50,18 @@ public class Main {
 	    System.exit(0);
 	}
 	
-	// Create parser
+	// Create parser and environment
+	Environment = new Environment();
 	Parser parser = new Parser(scanner);
 	Node root;
 	
-	// Parse each expression
+	// Parse, evaluate, and print each expression
 	
 	root = parser.parseExp();
+	Node output;
 	while (root != null) {
-	    Node output = (Node)root.eval(Environment);
+	    output = (Node) root.eval(Environment);
+	    output.print(0);
 	}
 	
 	

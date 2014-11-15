@@ -13,8 +13,9 @@ class If extends Special {
     
     // returns whether the args is true/false.
     public Object eval(Environment env){
-    	if( cons.getCar().eval(env) instanceof BooleanLit ){
-    		if( (boolean) cons.getCar().eval(env) )
+    	Node ev = (Node)cons.getCar().eval(env);
+    	if( ev instanceof BooleanLit ){
+    		if( ev.getBooleanVal() )
     			return true;
     		return false;
     	}

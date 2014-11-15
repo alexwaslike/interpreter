@@ -15,6 +15,21 @@ class Regular extends Special {
     }    
     
     public Object eval(Environment env){
-    	return null;
+    	Node car = cons.getCar();
+    	Node args = cons.getCdr();
+
+    	while ( car != null && car.isSymbol() ) {
+			car = env.lookup(car);
+    	}
+
+    	if ( car == null || car.isNull() ) {
+    		return null;
+    	}
+    	
+    	if (car.isProcedure()) {
+    		return car.apply(args, env);
+    	} else {
+    		return ((Node) car.eval(env)).apply(args, env);
+    	}
     }
 }

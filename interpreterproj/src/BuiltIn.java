@@ -35,11 +35,17 @@ class BuiltIn extends Node {
 	System.out.println('}');
     }
     
-    
     public Object eval(Environment env){
+    	return apply(this, env);
+    }
+    
+    public Object apply(Node args, Environment env){
     	
-    	Node car = getCar();
-    	Node cdr = getCdr();
+    	if(args == null) 
+    		return null;
+    	
+    	Node car = args.getCar();
+    	Node cdr = args.getCdr();
     	
     	// carries out apply based on symbol name
     	String name = car.getName();
@@ -68,11 +74,11 @@ class BuiltIn extends Node {
     	}
     	else if( name.equals("eval") ){
     		// calls eval()
-    		cdr.eval(env);
+    		return cdr.eval(env);
     	}
     	else if( name.equals("apply") ){
     		// calls apply()
-    		apply(cdr);
+    		return apply(car);
     	}
     	else if( name.equals("interaction-environment") ){
     		// returns pointer to global env
@@ -95,37 +101,37 @@ class BuiltIn extends Node {
     	// returns IntLit containing result
     	else if( name.equals("b+") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)car.eval(env) + (int)cdr.eval(env) );
+    			return new IntLit( car.getIntVal() + cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b-") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)car.eval(env) - (int)cdr.eval(env) );
+    			return new IntLit( car.getIntVal() - cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b*") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)car.eval(env) * (int)cdr.eval(env) );
+    			return new IntLit( car.getIntVal() * cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b/") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new IntLit( (int)car.eval(env) / (int)cdr.eval(env) );
+    			return new IntLit( car.getIntVal() / cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b=") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new BooleanLit( (int)car.eval(env) == (int)cdr.eval(env) );
+    			return new BooleanLit( car.getIntVal() == cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
     	else if( name.equals("b<") ){
     		if(car.isNumber() && cdr.isNumber())
-    			return new BooleanLit( (int)car.eval(env) < (int)cdr.eval(env) );
+    			return new BooleanLit( car.getIntVal() < cdr.getIntVal() );
     		else
     			throw new RuntimeException("Invalid args for binary operator.");
     	}
@@ -138,13 +144,13 @@ class BuiltIn extends Node {
     		return cdr;
     	}
     	else if( name.equals("cons") ){
-    		
+    		return null;
     	}
     	else if( name.equals("set-car!") ){
-    		
+    		return null;
     	}
     	else if( name.equals("set-cdr!") ){
-    		
+    		return null;
     	}
     	else if( name.equals("null?") ){
     		return new BooleanLit( car == null );

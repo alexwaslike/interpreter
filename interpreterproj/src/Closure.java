@@ -41,8 +41,8 @@ class Closure extends Node {
     	return null;
     }
     
-	public Node apply (Node args) {
-        	Environment localEnv = new Environment(this.getEnv());
+	public Node apply (Node args, Environment localEnv) {
+        	
 	        Node lambdaFun = this.getFun();
 
 	        Node value = null; 						//RESULT HOLDER
