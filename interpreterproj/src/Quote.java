@@ -12,6 +12,11 @@ class Quote extends Special {
     void print(Node t, int n, boolean p) {
     	Printer.printQuote(t, n, p);
     }
+    
+    public Object eval(Node args, Environment env){
+    	// returns whatever it is we're quoting
+    	return args.getCdr();
+    }
 
 }
     

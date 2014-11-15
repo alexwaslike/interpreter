@@ -13,4 +13,8 @@ class Regular extends Special {
     void print(Node t, int n, boolean p) {
     	  Printer.printRegular(t, n, p);
     }    
+    
+    public Object eval(Node args, Environment env){
+    	return null;
+    }
 }

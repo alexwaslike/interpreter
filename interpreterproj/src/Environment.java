@@ -42,6 +42,18 @@ class Environment extends Node {
 
     public Environment()		{ scope = new Nil();  env = null; }
     public Environment(Environment e)	{ scope = new Nil();  env = e; }
+    
+    //build env and make string array for built-ins
+    public void buildEnvironment() {
+    	String[] builtIns = { "b+", "b-", "b*", "b/", "b=", "b<",
+                                "b>", "number?", "symbol?", "car",
+                                "cdr", "cons", "set-car!", "set-cdr!",
+                                "null?", "pair?", "eq?", "procedure?",
+                                "read", "write", "eval", "apply", "display",
+                                "newline", "interaction-environment" };
+    
+            Ident id;
+    }
 
     public void print(int n) {
 	// there got to be a more efficient way to print n spaces
@@ -64,10 +76,10 @@ class Environment extends Node {
 	else {
 	    Node bind = alist.getCar();
 	    if (id.getName().equals(bind.getCar().getName()))
-		// return a list containing the value as only element
-		return bind.getCdr();
+			// return a list containing the value as only element
+			return bind.getCdr();
 	    else
-		return find(id, alist.getCdr());
+	    	return find(id, alist.getCdr());
 	}
     }
 
@@ -89,6 +101,9 @@ class Environment extends Node {
 		// if id already exists in innermost scope, update val
     	Node list = find(id, scope); 
     	if(list != null){
+    		// don't want to just set-cdr to val. want to make sure rest of 
+    		// parse tree stays attached too.
+    		val.setCdr(list.getCdr().getCdr());
 			list.setCdr(val);
 		}
     	// otherwise, add (id, val) as 1st element in innermost scope
@@ -106,23 +121,14 @@ class Environment extends Node {
     	// if id exists in innermost scope, update val
     	Node list = find(id, scope);
     	if(list != null){
+    		// don't want to just set-cdr to val. want to make sure rest of 
+    		// parse tree stays attached too.
+    		val.setCdr(list.getCdr().getCdr());
 			list.setCdr(val);
 		}
     	// otherwise, error
     	else{
     		throw new RuntimeException("ID " + id + " attempting to be set and not found.");
     	}
-    }
-    
-    //build env and make string array for built-ins
-    public void buildEnvironment() {
-        String[] builtIns = { "b+", "b-", "b*", "b/", "b=", "b<",
-                            "b>", "number?", "symbol?", "car",
-                            "cdr", "cons", "set-car!", "set-cdr!",
-                            "null?", "pair?", "eq?", "procedure?",
-                            "read", "write", "eval", "apply", "display",
-                            "newline", "interaction-environment" };
-
-        Ident id;
     }
 }

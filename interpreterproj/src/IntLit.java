@@ -9,5 +9,9 @@ class IntLit extends Node {
   }
 
   public boolean isNumber() { return true; }
+  
+  public Integer eval(Node args, Environment env){
+  	return intVal;
+  }
 
 }

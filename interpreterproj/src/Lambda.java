@@ -10,5 +10,9 @@ class Lambda extends Special {
     void print(Node t, int n, boolean p) {
     	  Printer.printLambda(t, n, p);
   	}
+    
+    public Object eval(Node args, Environment env){
+    	return new Closure(args, env);
+    }
 
 }

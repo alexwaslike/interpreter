@@ -19,8 +19,6 @@ class Closure extends Node {
     public Node getFun()		{ return fun; }
     public Environment getEnv()		{ return env; }
 
-    // TODO: The method isProcedure() should be defined in
-    // class Node to return false.
     public boolean isProcedure()	{ return true; }
 
     public void print(int n) {
@@ -34,10 +32,15 @@ class Closure extends Node {
 	System.out.println('}');
     }
 
-    // TODO: The method apply() should be defined in class Node
-    // to report an error.  It should be overwritten only in classes
-    // BuiltIn and Closure.
-    public Node apply (Node args) {
+    
+ // takes the environment out of the closure,
+ // adds a new frame for the function call,
+ // defines bindings for the parameters with the argument values in the new frame,
+ // evaluates the function body. -> calls apply() recursively
+    public Object eval(Node args, Environment env){
+    	return null;
+    }
+    
 	public Node apply (Node args) {
         	Environment localEnv = new Environment(this.getEnv());
 	        Node lambdaFun = this.getFun();
@@ -52,10 +55,9 @@ class Closure extends Node {
 	        }
 	        
 	        while (!(lambdaBody.isNull())) {				//Note: Is recursive. I think.
-	            value = lambdaBody.getCar().eval(localEnv);			//eval all the expression 
+	            value = (Node)lambdaBody.getCar().eval(lambdaBody.getCar(), localEnv);			//eval all the expression 
 	            lambdaBody = lambdaBody.getCdr();				//In Lambda
 	        }
 	        return value;
 	}
-    }
 }

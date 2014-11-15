@@ -35,6 +35,7 @@ class Node {
   public boolean isSymbol() { return false; }  // Ident  // done
   public boolean isNull()   { return false; }  // nil  // done
   public boolean isPair()   { return false; }  // Cons // done
+  public boolean isProcedure() { return false; } // Closure // done
 
   // TODO: Report an error in these default methods and implement them
   // in class Cons.  After setCar, a Cons cell needs to be `parsed' again
@@ -45,11 +46,21 @@ class Node {
   public static Node getCdr(Node t) { return t.getCdr(); }
   public static boolean isNull(Node t) { return t.isNull(); }
   public static boolean isPair(Node t) { return t.isPair(); }
+  public static boolean isProcedure(Node t) { return t.isProcedure(); }
   
   public Node getCar() {return null;}
   public Node getCdr() {return null;}
-  public void setCar(Node a) {}
-  public void setCdr(Node d) {}
+  public void setCar(Node a) {throw new RuntimeException("setCar called on a non-Cons Node.");}
+  public void setCdr(Node d) {throw new RuntimeException("setCdr called on a non-Cons Node.");}
   
   public String getName() { return ""; }
+  
+  public Node apply(Node args){
+	  throw new RuntimeException("Why are we calling apply from something other than a BuiltIn or Closure?");
+  }
+  
+  public Object eval(Node args, Environment env){
+	  System.out.println("Calling eval from parent class Node.");
+	  return null;
+  }
 }

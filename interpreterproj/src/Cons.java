@@ -45,10 +45,10 @@ class Cons extends Node {
     // TODO: Add any helper functions for parseList as appropriate.
 
     public Cons(Node a, Node d) {
-	car = a;
-	cdr = d;
-
-	parseList();
+		car = a;
+		cdr = d;
+	
+		parseList();
     }
 
     public void print(int n) {form.print(this, n, false);}	
@@ -60,5 +60,9 @@ class Cons extends Node {
     
     public Node getCar(){return car;}
     public Node getCdr(){return cdr;}
+    
+    public Object eval(Node args, Environment env){
+    	return eval(args.getCdr(), env);
+    }
 
 }

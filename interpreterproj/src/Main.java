@@ -16,8 +16,12 @@ public class Main {
 	"STRING",			// string constant
 	"IDENT"				// identifier
     };
+    
+    public static Environment Environment;
 
     public static void main (String argv[]) {
+    	
+    Environment = new Environment();
     	
 	// create scanner that reads from standard input
 	Scanner scanner = new Scanner(System.in);
@@ -53,14 +57,14 @@ public class Main {
 	Parser parser = new Parser(scanner);
 	Node root;
 	
-	// Parse and pretty-print each input expression
+	// Parse each expression
 	
 	root = parser.parseExp();
 	while (root != null) {
-	    root.print(0);
-	    root = parser.parseExp();
+	    Node output = (Node)root.eval(root, Environment);
 	}
-	System.exit(0);
+	
+	
     }
     	
 }

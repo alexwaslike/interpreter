@@ -13,4 +13,10 @@ class Set extends Special {
     void print(Node t, int n, boolean p) {
     	Printer.printSet(t, n, p);
     }
+    
+    // calls Environment.assign
+    public Object eval(Node args, Environment env){
+    	env.assign(args.getCar(), args.getCdr());
+    	return null;
+    }
 }
