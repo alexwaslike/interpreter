@@ -38,6 +38,24 @@ class Closure extends Node {
     // to report an error.  It should be overwritten only in classes
     // BuiltIn and Closure.
     public Node apply (Node args) {
-	return null;
+	public Node apply (Node args) {
+        	Environment localEnv = new Environment(this.getEnv());
+	        Node lambdaFun = this.getFun();
+
+	        Node value = null; 						//RESULT HOLDER
+	        Node params = lambdaFun.getCdr().getCar(); 			//Get params 
+	        Node lambdaBody = lambdaFun.getCdr().getCdr();			//From lambda expression
+	      
+	        while (!(params.isNull())) {					
+	            localEnv.assign(params.getCar(), args.getCar());		//params = args in local environment
+	            params = params.getCdr();
+	        }
+	        
+	        while (!(lambdaBody.isNull())) {				//Note: Is recursive. I think.
+	            value = lambdaBody.getCar().eval(localEnv);			//eval all the expression 
+	            lambdaBody = lambdaBody.getCdr();				//In Lambda
+	        }
+	        return value;
+	}
     }
 }
