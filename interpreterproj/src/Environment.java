@@ -113,4 +113,16 @@ class Environment extends Node {
     		throw new RuntimeException("ID " + id + " attempting to be set and not found.");
     	}
     }
+    
+    //build env and make string array for built-ins
+    public void buildEnvironment() {
+        String[] builtIns = { "b+", "b-", "b*", "b/", "b=", "b<",
+                            "b>", "number?", "symbol?", "car",
+                            "cdr", "cons", "set-car!", "set-cdr!",
+                            "null?", "pair?", "eq?", "procedure?",
+                            "read", "write", "eval", "apply", "display",
+                            "newline", "interaction-environment" };
+
+        Ident id;
+    }
 }
