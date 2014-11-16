@@ -112,6 +112,7 @@ class Environment extends Node {
     }
 
     public void define (Node id, Node val) {
+    	scope.set(id, val);
     	if(id == null || val == null){
     		throw new NullPointerException();
     	}
@@ -142,7 +143,8 @@ class Environment extends Node {
     	if(list != null){
     		// don't want to just set-cdr to val. want to make sure rest of 
     		// parse tree stays attached too.
-    		list.setCar(val);
+    		val.setCdr(list.getCdr().getCdr());
+			list.setCdr(val);
 		}
     	// otherwise, error
     	else{
