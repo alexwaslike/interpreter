@@ -182,7 +182,9 @@ class BuiltIn extends Node {
     		// prints out a new line
     		return new StrLit("\n");
     	}
-    	
+    	else {
+	        System.out.println("BuiltIn function not found.");
+	    }
     	return null;
     }
    

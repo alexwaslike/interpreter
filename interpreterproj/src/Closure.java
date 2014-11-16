@@ -43,20 +43,19 @@ class Closure extends Node {
     
 	public Node apply (Node args, Environment localEnv) {
         	
-	        Node lambdaFun = this.getFun();
 
-	        Node value = null; 						//RESULT HOLDER
-	        Node params = lambdaFun.getCdr().getCar(); 			//Get params 
-	        Node lambdaBody = lambdaFun.getCdr().getCdr();			//From lambda expression
+	        Node value = null; 										//RESULT HOLDER
+	        Node params = fun.getCdr().getCar(); 					//Get params 
+	        Node body = fun.getCdr().getCdr();						//From lambda expression
 	      
 	        while (!(params.isNull())) {					
 	            localEnv.assign(params.getCar(), args.getCar());		//params = args in local environment
 	            params = params.getCdr();
 	        }
 	        
-	        while (!(lambdaBody.isNull())) {				//Note: Is recursive. I think.
-	            value = (Node)lambdaBody.getCar().eval(localEnv);			//eval all the expression 
-	            lambdaBody = lambdaBody.getCdr();				//In Lambda
+	        while (!(body.isNull())) {								//Note: Is recursive. I think.
+	            value = (Node)body.getCar().eval(localEnv);			//eval all the expression 
+	            body = body.getCdr();								//In Lambda
 	        }
 	        return value;
 	}
