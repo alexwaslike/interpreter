@@ -112,25 +112,17 @@ class Environment extends Node {
     }
 
     public void define (Node id, Node val) {
-    	if(id == null || val == null){
-    		throw new NullPointerException();
+    	// if id already exists in innermost scope, update val
+        Node list = find(id, scope); 
+        if(list != null){
+        	list.setCar(val);
     	}
-    	else{
-    		// if id already exists in innermost scope, update val
-        	Node list = find(id, scope); 
-        	if(list != null){
-        		// don't want to just set-cdr to val. want to make sure rest of 
-        		// parse tree stays attached too.
-        		val.setCdr(list.getCdr().getCdr());
-    			list.setCdr(val);
-    		}
-        	// otherwise, add (id, val) as 1st element in innermost scope
-        	else{
-        		// create a list with entries (id, scope)
-        		// add that list to the environment
-        		scope = new Cons( new Cons(id,val), scope) ;
-        	}
-    	}
+        // otherwise, add (id, val) as 1st element in innermost scope
+        else{
+        	// create a list with entries (id, scope)
+        	// add that list to the environment
+        	scope = new Cons(new Cons(id, new Cons(val, new Nil())), scope);
+        }
     }
 
     public void assign (Node id, Node val) {
@@ -140,14 +132,14 @@ class Environment extends Node {
     	// if id exists in innermost scope, update val
     	Node list = find(id, scope);
     	if(list != null){
-    		// don't want to just set-cdr to val. want to make sure rest of 
-    		// parse tree stays attached too.
-    		val.setCdr(list.getCdr().getCdr());
-			list.setCdr(val);
+    		list.setCar(val);
 		}
-    	// otherwise, error
-    	else{
-    		throw new RuntimeException("ID " + id + " attempting to be set and not found.");
+    	// otherwise, look for the val deeper in
+    	else if(env == null){
+    		assign(id, env);
     	}
+    	else
+    		throw new RuntimeException("ID does not exist.");
     }
 }
+
