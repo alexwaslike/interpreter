@@ -1,3 +1,10 @@
+// CSC 4101
+// Project 2
+// 
+// Alexandra Willis
+// John Anny
+
+
 // Main.java -- the main program
 
 import java.io.*;

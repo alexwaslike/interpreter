@@ -1,3 +1,11 @@
+// CSC 4101
+// Project 2
+// 
+// Alexandra Willis
+// John Anny
+
+
+
 // Closure.java -- the data structure for function closures
 
 // Class Closure is used to represent the value of lambda expressions.
