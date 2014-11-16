@@ -112,7 +112,6 @@ class Environment extends Node {
     }
 
     public void define (Node id, Node val) {
-    	scope.set(id, val);
     	if(id == null || val == null){
     		throw new NullPointerException();
     	}
