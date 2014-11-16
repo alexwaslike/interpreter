@@ -138,19 +138,23 @@ class BuiltIn extends Node {
     	// LIST OPERATIONS
     	// car, cdr, cons, set-car!, set-cdr!, null? pair? eq?
     	else if( name.equals("car") ){
-    		return car;
+    		if(car.isNull()) return null;
+    		return car.getCar();
     	}
     	else if( name.equals("cdr") ){
-    		return cdr;
+    		if(car.isNull()) return null;
+    		return car.getCdr();
     	}
     	else if( name.equals("cons") ){
-    		return null;
+    		return new Cons(car,cdr);
     	}
     	else if( name.equals("set-car!") ){
-    		return null;
+    		car.getCar().setCar(cdr);
+    		return car;
     	}
     	else if( name.equals("set-cdr!") ){
-    		return null;
+    		car.getCar().setCdr(cdr);
+    		return car;
     	}
     	else if( name.equals("null?") ){
     		return new BooleanLit( car == null );

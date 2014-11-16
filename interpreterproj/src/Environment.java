@@ -142,8 +142,7 @@ class Environment extends Node {
     	if(list != null){
     		// don't want to just set-cdr to val. want to make sure rest of 
     		// parse tree stays attached too.
-    		val.setCdr(list.getCdr().getCdr());
-			list.setCdr(val);
+    		list.setCar(val);
 		}
     	// otherwise, error
     	else{

@@ -14,6 +14,6 @@ class Ident extends Node {
   public String getName(){return name;}
   
   public Object eval(Environment env){
-  	return null;
+  	return env.lookup(this);
   }
 }
